@@ -13,35 +13,48 @@ function SignIn() {
 	const submitHandler = async (e) => {
 		e.preventDefault()
 		setErrorMessage("")
-
-		const loginResponse = await fetch("http://localhost:3001/api/v1/user/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(formData),
-		})
-
 		let loginData
 
-		if (loginResponse.status === 200) {
+		try {
+			// Try to connect
+			const loginResponse = await fetch("http://localhost:3001/api/v1/user/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formData),
+			})
+
+			if (!loginResponse.ok) {
+				loginResponse.status === 400 ? setErrorMessage("Incorrect credentials") : setErrorMessage("An error occurred")
+				return
+			}
+
 			loginData = await loginResponse.json()
-		} else if (loginResponse.status === 400) {
-			setErrorMessage("Identifiants incorrect")
-			return
-		} else {
-			setErrorMessage("Une erreur est survenue")
-			return
+		} catch (error) {
+			console.error("Error during login:", error.message)
 		}
 
-		const profileResponse = await fetch("http://localhost:3001/api/v1/user/profile", {
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${loginData.body.token}`,
-			},
-		})
-		const userData = await profileResponse.json()
-		dispatch(initInfo({ lastName: userData.body.lastName, firstName: userData.body.firstName, token: loginData.body.token }))
+		if (loginData) {
+			try {
+				// Try to get the user profile
+				const profileResponse = await fetch("http://localhost:3001/api/v1/user/profile", {
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${loginData.body.token}`,
+					},
+				})
+
+				if (!profileResponse.ok) {
+					throw new Error("Error while fetching user profile")
+				}
+
+				const userData = await profileResponse.json()
+				dispatch(initInfo({ lastName: userData.body.lastName, firstName: userData.body.firstName, token: loginData.body.token }))
+			} catch (error) {
+				console.error("Error during profile retrieval:", error.message)
+			}
+		}
 	}
 
 	const fieldHandler = (e) => {
@@ -64,11 +77,12 @@ function SignIn() {
 							<label htmlFor="password">Password</label>
 							<input name="password" type="password" id="password" value={formData.password} onChange={fieldHandler} />
 						</div>
+						{errorMessage && <p className="errorMessage">{errorMessage}</p>}
 						<div className="input-remember">
 							<input type="checkbox" id="remember-me" />
 							<label htmlFor="remember-me">Remember me</label>
 						</div>
-						{errorMessage && <p className="errorMessage">{errorMessage}</p>}
+
 						<button className="sign-in-button">Sign In</button>
 					</form>
 				</section>
