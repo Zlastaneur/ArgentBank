@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux"
 import "../App.scss"
-import "./sign-in.scss"
+import "./login.scss"
 import { initInfo } from "../features/userSlice"
 import { useState } from "react"
 import { FaCircleUser } from "react-icons/fa6"
 
-function SignIn() {
+function Login() {
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState({ email: "", password: "" })
 	const [errorMessage, setErrorMessage] = useState("")
@@ -91,4 +91,4 @@ function SignIn() {
 	)
 }
 
-export default SignIn
+export default Login

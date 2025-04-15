@@ -1,0 +1,47 @@
+.error404 {
+	color: #00bc78;
+	cursor: default;
+	padding: 3rem 0;
+	display: flex;
+	flex-flow: column nowrap;
+	min-height: calc(100vh - 280px);
+
+	h1 {
+		font-size: 12rem;
+		margin: 0 0 2rem 0;
+	}
+
+	h2 {
+		font-weight: 500;
+	}
+
+	p {
+		margin-top: 5rem;
+		font-weight: 500;
+		font-size: 1.1em;
+		color: black;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		cursor: pointer;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.error404 {
+		padding: 2rem 1rem;
+
+		h1 {
+			font-size: 7rem;
+			margin: 0 0 4rem 0;
+		}
+
+		h2 {
+			max-width: 85%;
+			margin: 0 auto;
+			font-size: 1.2rem;
+		}
+		p {
+			font-size: 0.8rem;
+		}
+	}
+}

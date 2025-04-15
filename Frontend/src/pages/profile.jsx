@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux"
 import "../App.scss"
-import "./user.scss"
+import "./profile.scss"
 import { initInfo } from "../features/userSlice"
 import { useState } from "react"
 
-function User() {
+function Profile() {
 	const dispatch = useDispatch()
 	const [formData, setFormData] = useState({ username: "", password: "" })
 
@@ -64,4 +64,4 @@ function User() {
 	)
 }
 
-export default User
+export default Profile
