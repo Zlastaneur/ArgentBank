@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux"
 import "../App.scss"
 import "./header.scss"
 import logo from "/img/argentBankLogo.png"
+import { useSelector } from "react-redux"
 import { FaCircleUser } from "react-icons/fa6"
 import { GoSignOut } from "react-icons/go"
 import { Link } from "react-router"
@@ -14,7 +14,6 @@ function Header() {
 			<nav className="main-nav">
 				<Link to="/" className="main-nav-logo">
 					<img className="main-nav-logo-image" src={logo} alt="Argent Bank Logo" />
-
 					<h1 className="sr-only">Argent Bank</h1>
 				</Link>
 

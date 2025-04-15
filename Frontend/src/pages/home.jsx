@@ -1,25 +1,10 @@
-import { useDispatch } from "react-redux"
 import "../App.scss"
 import "./home.scss"
-import { initInfo } from "../features/userSlice"
-import { useState } from "react"
 import chatIcon from "/img/icon-chat.png"
 import moneyIcon from "/img/icon-money.png"
 import securityIcon from "/img/icon-security.png"
 
 function Home() {
-	const dispatch = useDispatch()
-	const [formData, setFormData] = useState({ username: "", password: "" })
-
-	const submitHandler = (e) => {
-		e.preventDefault()
-		dispatch(initInfo({ name: "", firstname: formData.username, token: "" }))
-	}
-	const fieldHandler = (e) => {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
-	}
-
 	return (
 		<>
 			<main>

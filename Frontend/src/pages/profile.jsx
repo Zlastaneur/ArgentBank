@@ -1,21 +1,10 @@
-import { useDispatch } from "react-redux"
 import "../App.scss"
 import "./profile.scss"
-import { initInfo } from "../features/userSlice"
-import { useState } from "react"
+import { useSelector } from "react-redux"
 
 function Profile() {
-	const dispatch = useDispatch()
-	const [formData, setFormData] = useState({ username: "", password: "" })
-
-	const submitHandler = (e) => {
-		e.preventDefault()
-		dispatch(initInfo({ name: "", firstname: formData.username, token: "" }))
-	}
-	const fieldHandler = (e) => {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
-	}
+	const firstName = useSelector((state) => state.user.firstName)
+	const lastName = useSelector((state) => state.user.lastName)
 
 	return (
 		<>
@@ -24,7 +13,7 @@ function Profile() {
 					<h1>
 						Welcome back
 						<br />
-						Tony Jarvis!
+						{firstName} {lastName}
 					</h1>
 					<button className="edit-button">Edit Name</button>
 				</div>

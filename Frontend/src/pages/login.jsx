@@ -4,9 +4,11 @@ import "./login.scss"
 import { initInfo } from "../features/userSlice"
 import { useState } from "react"
 import { FaCircleUser } from "react-icons/fa6"
+import { useNavigate } from "react-router"
 
 function Login() {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [formData, setFormData] = useState({ email: "", password: "" })
 	const [errorMessage, setErrorMessage] = useState("")
 
@@ -51,6 +53,7 @@ function Login() {
 
 				const userData = await profileResponse.json()
 				dispatch(initInfo({ lastName: userData.body.lastName, firstName: userData.body.firstName, token: loginData.body.token }))
+				navigate(`/profile`)
 			} catch (error) {
 				console.error("Error during profile retrieval:", error.message)
 			}
