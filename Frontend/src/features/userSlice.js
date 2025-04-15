@@ -4,27 +4,34 @@ const initialState = {
     lastName: "",
     firstName: "",
     token: "",
+    isLoggedIn: false,
+    rememberEmail: false,
+    savedEmail: "",
 }
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        initInfo: (state, action) => {
+        setUserInfo: (state, action) => {
             state.lastName = action.payload.lastName
             state.firstName = action.payload.firstName
             state.token = action.payload.token
         },
-        updateInfo: (state, action) => {
+        updateUserInfo: (state, action) => {
             state.lastName = action.payload.lastName
             state.firstName = action.payload.firstName
         },
+        setLoginStatus: (state, action) => {
+            state.isLoggedIn = action.payload.isLoggedIn
+        },
+        toggleRememberEmail: (state, action) => {
+            state.rememberEmail = action.payload.rememberEmail
+            state.savedEmail = action.payload.rememberEmail ? action.payload.email : ""
+        }
     },
 })
 
-export const { initInfo, updateInfo } = userSlice.actions
-/*
-export const selectUser=()=>{
-}*/
+export const { setUserInfo, updateUserInfo, setLoginStatus, toggleRememberEmail } = userSlice.actions
 
 export default userSlice.reducer

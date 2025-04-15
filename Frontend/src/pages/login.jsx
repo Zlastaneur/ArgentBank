@@ -1,21 +1,43 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "../App.scss"
 import "./login.scss"
-import { initInfo } from "../features/userSlice"
-import { useState } from "react"
+import { setUserInfo, setLoginStatus, toggleRememberEmail } from "../features/userSlice" // Mises à jour des noms
+import { useState, useEffect } from "react"
 import { FaCircleUser } from "react-icons/fa6"
 import { useNavigate } from "react-router"
 
 function Login() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const [formData, setFormData] = useState({ email: "", password: "" })
+
+	const rememberEmail = useSelector((state) => state.user.rememberEmail) // Renommé depuis rememberMe
+	const savedEmail = useSelector((state) => state.user.savedEmail) // Renommé depuis email
+
+	const [formData, setFormData] = useState({
+		email: rememberEmail ? savedEmail : "",
+		password: "",
+	})
 	const [errorMessage, setErrorMessage] = useState("")
+	const [rememberCheckbox, setRememberCheckbox] = useState(rememberEmail)
+
+	useEffect(() => {
+		if (rememberEmail) {
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				email: savedEmail,
+			}))
+		}
+	}, [rememberEmail, savedEmail])
 
 	const submitHandler = async (e) => {
 		e.preventDefault()
 		setErrorMessage("")
 		let loginData
+
+		if (!formData.email || !formData.password) {
+			setErrorMessage("Email and password are required")
+			return
+		}
 
 		try {
 			// Try to connect
@@ -52,7 +74,36 @@ function Login() {
 				}
 
 				const userData = await profileResponse.json()
-				dispatch(initInfo({ lastName: userData.body.lastName, firstName: userData.body.firstName, token: loginData.body.token }))
+
+				dispatch(
+					setUserInfo({
+						lastName: userData.body.lastName,
+						firstName: userData.body.firstName,
+						token: loginData.body.token,
+					})
+				),
+					dispatch(
+						setLoginStatus({
+							isLoggedIn: true,
+						})
+					)
+
+				if (rememberCheckbox) {
+					dispatch(
+						toggleRememberEmail({
+							rememberEmail: true,
+							email: formData.email, // Store the email if "remember me" is checked
+						})
+					)
+				} else {
+					dispatch(
+						toggleRememberEmail({
+							rememberEmail: false,
+							email: "",
+						})
+					)
+				}
+
 				navigate(`/profile`)
 			} catch (error) {
 				console.error("Error during profile retrieval:", error.message)
@@ -74,7 +125,13 @@ function Login() {
 					<form onSubmit={submitHandler}>
 						<div className="input-wrapper">
 							<label htmlFor="email">Email</label>
-							<input name="email" type="text" id="email" value={formData.email} onChange={fieldHandler} />
+							<input
+								name="email"
+								type="text"
+								id="email"
+								value={rememberEmail ? savedEmail : formData.email} // Show stored email or local state
+								onChange={fieldHandler}
+							/>
 						</div>
 						<div className="input-wrapper">
 							<label htmlFor="password">Password</label>
@@ -82,10 +139,14 @@ function Login() {
 						</div>
 						{errorMessage && <p className="errorMessage">{errorMessage}</p>}
 						<div className="input-remember">
-							<input type="checkbox" id="remember-me" />
+							<input
+								type="checkbox"
+								id="remember-me"
+								checked={rememberCheckbox}
+								onChange={() => setRememberCheckbox(!rememberCheckbox)}
+							/>
 							<label htmlFor="remember-me">Remember me</label>
 						</div>
-
 						<button className="sign-in-button">Sign In</button>
 					</form>
 				</section>
