@@ -26,7 +26,7 @@ function Profile() {
 					) : (
 						<>
 							<h1>
-								Welcome back
+								Welcome Back
 								<br />
 								{firstName} {lastName}
 							</h1>
