@@ -1,0 +1,29 @@
+.edit-profile-form {
+	input {
+		margin: 5px;
+		padding: 10px;
+		border-radius: 5px;
+		border: 1px solid white;
+		font-weight: bold;
+
+		::placeholder {
+			color: grey;
+		}
+	}
+
+	.edit-profile-buttons {
+		display: flex;
+		justify-content: center;
+
+		button {
+			background-color: #00bc77;
+			color: white;
+			font-weight: bold;
+			margin: 5px;
+			padding: 5px 25px;
+			border-radius: 5px;
+			border: 1px solid white;
+			cursor: pointer;
+		}
+	}
+}

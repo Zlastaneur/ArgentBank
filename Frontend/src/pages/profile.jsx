@@ -1,21 +1,40 @@
 import "../App.scss"
 import "./profile.scss"
 import { useSelector } from "react-redux"
+import { useState } from "react"
+import EditProfile from "../components/editProfile"
 
 function Profile() {
 	const firstName = useSelector((state) => state.user.firstName)
 	const lastName = useSelector((state) => state.user.lastName)
+	const [isEditing, setIsEditing] = useState(false)
+
+	const handleEditClick = () => {
+		setIsEditing(true)
+	}
+
+	const handleCancelClick = () => {
+		setIsEditing(false)
+	}
 
 	return (
 		<>
 			<main className="main bg-dark">
 				<div className="header">
-					<h1>
-						Welcome back
-						<br />
-						{firstName} {lastName}
-					</h1>
-					<button className="edit-button">Edit Name</button>
+					{isEditing ? (
+						<EditProfile onCancel={handleCancelClick} />
+					) : (
+						<>
+							<h1>
+								Welcome back
+								<br />
+								{firstName} {lastName}
+							</h1>
+							<button className="edit-button" onClick={handleEditClick}>
+								Edit Name
+							</button>
+						</>
+					)}
 				</div>
 				<h2 className="sr-only">Accounts</h2>
 				<section className="account">

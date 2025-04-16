@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import "../App.scss"
 import "./login.scss"
-import { setUserInfo, setLoginStatus, toggleRememberEmail } from "../features/userSlice" // Mises à jour des noms
+import { setUserInfo, setLoginStatus, toggleRememberEmail } from "../features/userSlice"
 import { useState, useEffect } from "react"
 import { FaCircleUser } from "react-icons/fa6"
 import { useNavigate } from "react-router"
@@ -10,8 +10,8 @@ function Login() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const rememberEmail = useSelector((state) => state.user.rememberEmail) // Renommé depuis rememberMe
-	const savedEmail = useSelector((state) => state.user.savedEmail) // Renommé depuis email
+	const rememberEmail = useSelector((state) => state.user.rememberEmail)
+	const savedEmail = useSelector((state) => state.user.savedEmail)
 
 	const [formData, setFormData] = useState({
 		email: rememberEmail ? savedEmail : "",
