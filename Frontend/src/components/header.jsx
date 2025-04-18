@@ -11,8 +11,7 @@ function Header() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const firstName = useSelector((state) => state.user.firstName)
-	const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+	const { firstName, isLoggedIn } = useSelector((state) => state.user)
 
 	const handleLogout = () => {
 		dispatch(

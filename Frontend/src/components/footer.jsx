@@ -1,10 +1,7 @@
-import { useSelector } from "react-redux"
 import "../App.scss"
 import "./footer.scss"
 
-function Header() {
-	const firstname = useSelector((state) => state.user.firstname)
-
+function Footer() {
 	return (
 		<>
 			<footer className="footer">
@@ -14,4 +11,4 @@ function Header() {
 	)
 }
 
-export default Header
+export default Footer

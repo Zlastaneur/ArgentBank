@@ -1,13 +1,14 @@
 import "../App.scss"
 import "./profile.scss"
 import { useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import EditProfile from "../components/editProfile"
 
 function Profile() {
-	const firstName = useSelector((state) => state.user.firstName)
-	const lastName = useSelector((state) => state.user.lastName)
+	const { firstName, lastName, isLoggedIn } = useSelector((state) => state.user)
 	const [isEditing, setIsEditing] = useState(false)
+	const navigate = useNavigate()
 
 	const handleEditClick = () => {
 		setIsEditing(true)
@@ -16,6 +17,12 @@ function Profile() {
 	const handleCancelClick = () => {
 		setIsEditing(false)
 	}
+
+	useEffect(() => {
+		if (!isLoggedIn) {
+			navigate(`/login`)
+		}
+	})
 
 	return (
 		<>
