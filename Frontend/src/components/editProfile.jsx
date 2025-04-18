@@ -7,14 +7,11 @@ import { useState } from "react"
 function EditProfile({ onCancel }) {
 	const dispatch = useDispatch()
 
-	const firstNameInitialState = useSelector((state) => state.user.firstName)
-	const lastNameInitialState = useSelector((state) => state.user.lastName)
-	const userToken = useSelector((state) => state.user.token)
+	const { firstName, lastName, token } = useSelector((state) => state.user)
 	const [errorMessage, setErrorMessage] = useState("")
-
 	const [data, setData] = useState({
-		firstName: firstNameInitialState || "",
-		lastName: lastNameInitialState || "",
+		firstName: firstName || "",
+		lastName: lastName || "",
 	})
 
 	const handleSubmit = async (e) => {
@@ -27,7 +24,7 @@ function EditProfile({ onCancel }) {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${userToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(updatedInfo),
 			})
@@ -54,8 +51,8 @@ function EditProfile({ onCancel }) {
 		<>
 			<h1>Welcome Back</h1>
 			<form onSubmit={handleSubmit} className="edit-profile-form">
-				<input type="text" name="firstName" value={data.firstName} onChange={fieldHandler} placeholder={firstNameInitialState} />
-				<input type="text" name="lastName" value={data.lastName} onChange={fieldHandler} placeholder={lastNameInitialState} />
+				<input type="text" name="firstName" value={data.firstName} onChange={fieldHandler} placeholder={firstName} />
+				<input type="text" name="lastName" value={data.lastName} onChange={fieldHandler} placeholder={lastName} />
 				{errorMessage && <p className="errorMessage">{errorMessage}</p>}
 				<div className="edit-profile-buttons">
 					<button type="submit">Save</button>

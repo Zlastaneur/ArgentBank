@@ -10,8 +10,7 @@ function Login() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const rememberEmail = useSelector((state) => state.user.rememberEmail)
-	const savedEmail = useSelector((state) => state.user.savedEmail)
+	const { rememberEmail, savedEmail } = useSelector((state) => state.user)
 
 	const [formData, setFormData] = useState({
 		email: rememberEmail ? savedEmail : "",
@@ -129,7 +128,7 @@ function Login() {
 								name="email"
 								type="text"
 								id="email"
-								value={rememberEmail ? savedEmail : formData.email} // Show stored email or local state
+								value={formData.email} // Show stored email or local state
 								onChange={fieldHandler}
 							/>
 						</div>
