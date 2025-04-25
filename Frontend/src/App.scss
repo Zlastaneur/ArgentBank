@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 html {
-	font-family: "Roboto", sans-serif; // Définissez une police par défaut
+	font-family: "Roboto", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
@@ -13,19 +13,19 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	font-family: "Manrope", sans-serif; // Appliquez une autre police si nécessaire
+	font-family: "Manrope", sans-serif;
 }
 
 h1,
 h2,
 h3 {
-	font-family: "Montserrat", sans-serif; // Utilisez une police différente pour les titres
+	font-family: "Montserrat", sans-serif;
 }
 
 p,
 input,
 button {
-	font-family: "DM Sans", sans-serif; // Appliquez une autre police pour les paragraphes et les formulaires
+	font-family: "DM Sans", sans-serif;
 }
 
 #root {
